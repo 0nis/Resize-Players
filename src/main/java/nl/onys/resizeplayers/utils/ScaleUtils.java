@@ -1,6 +1,7 @@
 package nl.onys.resizeplayers.utils;
 
 import nl.onys.resizeplayers.ResizePlayers;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,15 +29,8 @@ public class ScaleUtils {
         AttributeInstance scale = player.getAttribute(Attribute.GENERIC_SCALE);
         if (scale == null) return;
         scale.setBaseValue(newScale);
-
-        FileConfiguration config = ResizePlayers.getPlugin().getConfig();
-        if (config.getBoolean("affects-reach")) {
-            ReachUtils.setPlayerBlockReach(player, ReachUtils.calculateReach(newScale, false));
-            ReachUtils.setPlayerEntityReach(player, ReachUtils.calculateReach(newScale, true));
-        } else {
-            ReachUtils.setPlayerBlockReach(player, ReachUtils.calculateReach(1.0, false));
-            ReachUtils.setPlayerEntityReach(player, ReachUtils.calculateReach(1.0, true));
-        }
+        PlayerDataUtils.savePlayerHeight(player, convertScaleToBlocks(newScale));
+        ReachUtils.setPlayerReach(player, newScale);
     }
 
     /**

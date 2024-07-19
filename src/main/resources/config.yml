@@ -72,7 +72,7 @@ info-message:
 no-permission: "&cYou don't have permission to use this command! You need permission &f{permission}&c."
 wrong-usage: "&cWrong usage! Use &f{usage}&c."
 only-players: "&cYou must be a player to use this command."
-player-not-found: "&cPlayer &f{target}&c not found. Is the player online?"
+player-not-found: "&cPlayer &f{target}&c not found."
 
 config-reloaded: "&aConfig reloaded!"
 on-unknown-error: "&cAn unknown error occurred. Please check the console for more information."

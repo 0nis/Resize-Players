@@ -1,10 +1,13 @@
 package nl.onys.resizeplayers.commands;
 
 import nl.onys.resizeplayers.ResizePlayers;
+import nl.onys.resizeplayers.configs.PlayerData;
 import nl.onys.resizeplayers.utils.MessageUtils;
+import nl.onys.resizeplayers.utils.PlayerDataUtils;
 import nl.onys.resizeplayers.utils.ReachUtils;
 import nl.onys.resizeplayers.utils.ScaleUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +18,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class PluginCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -28,6 +32,7 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("reload")) {
             if (commandSender.hasPermission("resizeplayers.reload") || commandSender.isOp()) {
                 ResizePlayers.getPlugin().reloadConfig();
+                PlayerData.reload();
                 MessageUtils.onConfigReloaded(commandSender);
             } else {
                 MessageUtils.onNoPermission(commandSender, "resizeplayers.reload");
@@ -46,18 +51,13 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 Player player = (Player) commandSender;
-                return sendInfoMessage(commandSender, player);
+                return sendInfoMessage(commandSender, player.getName());
             } else if (args.length == 2) {
                 if (!commandSender.hasPermission("resizeplayers.info.others") && !commandSender.isOp()) {
                     MessageUtils.onNoPermission(commandSender, "resizeplayers.info.others");
                     return false;
                 }
-                Player player = Bukkit.getPlayer(args[1]);
-                if (player == null) {
-                    MessageUtils.onPlayerNotFound(commandSender, args[1]);
-                    return true;
-                }
-                return sendInfoMessage(commandSender, player);
+                return sendInfoMessage(commandSender, args[1]);
             } else {
                 MessageUtils.onWrongUsage(commandSender, "/resizeplayers info [player]");
             }
@@ -68,13 +68,28 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
     /**
      * Sends player height and reach information to the command sender
      * @param commandSender The command sender to send the information to
-     * @param player The player to get the information from
+     * @param username The username of the player to get the information of
      */
-    private boolean sendInfoMessage(CommandSender commandSender, Player player) {
+    private boolean sendInfoMessage(CommandSender commandSender, String username) {
+        String uuid = PlayerDataUtils.getUUIDFromUsername(username);
+        if (uuid == null) {
+            MessageUtils.onPlayerNotFound(commandSender, username);
+            return true;
+        }
+        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+        return sendInfoMessage(commandSender, player);
+    }
+
+    /**
+     * Sends player height and reach information to the command sender
+     * @param commandSender The command sender to send the information to
+     * @param player The player to get the information of
+     */
+    private boolean sendInfoMessage(CommandSender commandSender, OfflinePlayer player) {
         DecimalFormat df = new DecimalFormat("#.##");
-        String blockHeight = df.format(ScaleUtils.convertScaleToBlocks(ScaleUtils.getPlayerScale(player)));
-        String blockReach = df.format(ReachUtils.getPlayerBlockReach(player));
-        String entityReach = df.format(ReachUtils.getPlayerEntityReach(player));
+        String blockHeight = df.format(PlayerDataUtils.getPlayerHeight(player));
+        String blockReach = df.format(PlayerDataUtils.getPlayerBlockReach(player));
+        String entityReach = df.format(PlayerDataUtils.getPlayerEntityReach(player));
 
         MessageUtils.onInfoMessage(commandSender, player.getName(), blockHeight, blockReach, entityReach);
         return true;

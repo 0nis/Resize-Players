@@ -9,6 +9,27 @@ import org.bukkit.entity.Player;
 public class ReachUtils {
 
     /**
+     * Sets the reach of a player based on their scale if the config allows it
+     * @param player The player to set the reach of
+     * @param scale The scale of the player
+     */
+    public static void setPlayerReach(Player player, double scale) {
+        FileConfiguration config = ResizePlayers.getPlugin().getConfig();
+        double blockReach = ReachUtils.calculateReach(scale, false);
+        double entityReach = ReachUtils.calculateReach(scale, true);
+        if (config.getBoolean("affects-reach")) {
+            setPlayerBlockReach(player, blockReach);
+            setPlayerEntityReach(player, entityReach);
+        } else {
+            blockReach = 4.5;
+            entityReach = 3.0;
+            setPlayerBlockReach(player, blockReach);
+            setPlayerEntityReach(player, entityReach);
+        }
+        PlayerDataUtils.savePlayerReach(player, blockReach, entityReach);
+    }
+
+    /**
      * Sets the entity reach of a player
      * @param player The player to set the reach of
      * @param reach The reach to set
