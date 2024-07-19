@@ -78,7 +78,7 @@ config-reloaded: "&aConfig reloaded!"
 on-unknown-error: "&cAn unknown error occurred. Please check the console for more information."
 
 scaled-self: "&aYou have resized yourself to &f{blocks}&a blocks."
-scaled-other: "&aYou have resized &f{player}&a to &f{blocks}&a blocks."
+scaled-other: "&aYou have resized &f{target}&a to &f{blocks}&a blocks."
 scaled-all: "&aYou have resized all players to &f{blocks}&a blocks."
 on-bypassed: "&aYou have bypassed the minimum or maximum scale limit."
 
