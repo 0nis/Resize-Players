@@ -1,0 +1,14 @@
+name: ResizePlayers
+version: '1.0'
+author: 0nys
+main: nl.onys.resizeplayers.ResizePlayers
+api-version: '1.21'
+commands:
+  resize:
+    description: Resize yourself or another player
+    usage: /resize <blocks> [player]
+    permission: resizeplayers.scale.self
+    aliases: [scale, changeheight, resizeplayer]
+  resizeplayers:
+    description: ResizePlayers commands
+    usage: /resizeplayers

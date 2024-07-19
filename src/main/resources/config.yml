@@ -1,0 +1,86 @@
+####################################################
+# ------------------- Config --------------------- #
+####################################################
+
+# Permissions:
+# resizeplayers.scale.self - Allows the player to scale themselves with /resize <blocks>.
+# resizeplayers.scale.others - Allows the player to scale other players with /resize <blocks> <player>.
+# resizeplayers.scale.all - Allows the player to scale all players with /resize <blocks> all.
+# resizeplayers.scale.exempt - Exempts the player from being scaled.
+# resizeplayers.scale.bypass - Allows the player to bypass the minimum and maximum scale limit.
+# resizeplayers.reload - Allows the player to reload the plugin with /resizeplayers reload.
+# resizeplayers.info.self - Allows the player to view their own height, block reach, and entity reach with /resizeplayers info.
+# resizeplayers.info.others - Allows the player to view another player's height, block reach, and entity reach with /resizeplayers info <player>.
+
+# The minimum and maximum scale limit
+block-height-limit:
+  min: 0.5
+  max: 5
+
+# Whether the scale affects the reach distance
+affects-reach: true
+
+# The formulas used to calculate the reach distance.
+# Scaled-up is used when the player's height is scaled up, and scaled-down is used when the player's height is scaled down.
+# Options:
+# - "linear"                  - Reach changes proportionally with scale.                  baseReach × scale
+# - "exponential"             - Reach increases gradually with scale raised to a power.   baseReach × scale^exponential-power
+# - "logarithmic"             - Reach increases slowly with the logarithm of scale.       baseReach × (1 + log(scale))
+reach-formula:
+  scaled-up: "logarithmic"
+  scaled-down: "exponential"
+
+# If the exponential formula is used, the power to raise the scale to
+# The default is 0.5
+exponential-power: 0.5
+
+# The minimum and maximum distance you can reach blocks from by resizing
+# The default for a regular scaled player is 4.5 blocks
+block-reach-limit:
+  min: 2
+  max: 20
+
+# The minimum and maximum distance you can reach entities from by resizing
+# The default for a regular scaled player is 3 blocks
+entity-reach-limit:
+  min: 2
+  max: 20
+
+# ------------------------------------------------------ #
+# |                     Messages                       | #
+# ------------------------------------------------------ #
+
+help-command-lines:
+    - "&7&m-------------&r &e&l{name} &7&m-------------"
+    - "&7Version: &e{version}"
+    - "&7Author: &e{author}"
+    - ""
+    - "&e/resizeplayers help &7- View this help menu."
+    - "&e/resizeplayers reload &7- Reload the configuration file."
+    - "&e/resizeplayers info <player> &7- View the height, block reach, and entity reach of a player."
+    - "&e/resize <blocks> &7- Resize yourself to the specified amount of blocks."
+    - "&e/resize <blocks> <player> &7- Resize another player to the specified amount of blocks."
+    - "&e/resize <blocks> all &7- Resize all players to the specified amount of blocks."
+    - "&7&m------------------------------------------"
+
+info-message:
+    - "&7&m-------------&r &e&l{player} &7&m-------------"
+    - "&7Height: &e{height} blocks"
+    - "&7Block Reach: &e{block-reach} blocks"
+    - "&7Entity Reach: &e{entity-reach} blocks"
+
+no-permission: "&cYou don't have permission to use this command! You need permission &f{permission}&c."
+wrong-usage: "&cWrong usage! Use &f{usage}&c."
+only-players: "&cYou must be a player to use this command."
+player-not-found: "&cPlayer &f{target}&c not found. Is the player online?"
+
+config-reloaded: "&aConfig reloaded!"
+on-unknown-error: "&cAn unknown error occurred. Please check the console for more information."
+
+scaled-self: "&aYou have resized yourself to &f{blocks}&a blocks."
+scaled-other: "&aYou have resized &f{player}&a to &f{blocks}&a blocks."
+scaled-all: "&aYou have resized all players to &f{blocks}&a blocks."
+on-bypassed: "&aYou have bypassed the minimum or maximum scale limit."
+
+invalid-scale: "&cInvalid size! The size must be a number between &f{min}&c and &f{max}&c blocks."
+target-exempt: "&cPlayer &f{target}&c is exempt from being resized."
