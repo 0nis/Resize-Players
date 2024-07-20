@@ -76,7 +76,7 @@ public class ResizeCommand implements CommandExecutor, TabCompleter {
             MessageUtils.onPlayerNotFound(player, target);
             return false;
         }
-        if (targetPlayer.hasPermission("resizeplayers.scale.exempt")) {
+        if (targetPlayer.hasPermission("resizeplayers.scale.exempt") && player != targetPlayer) {
             MessageUtils.onTargetExempt(player, targetPlayer.getName());
             return false;
         }

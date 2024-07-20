@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="ResizePlayers-2.0-1.21">
+  <artifact type="jar" name="ResizePlayers-2.1-1.21">
     <output-path>$PROJECT_DIR$/../../../Servers/Minecraft/testing-1.21-paper-experimental/plugins</output-path>
-    <root id="archive" name="ResizePlayers-2.0-1.21.jar">
+    <root id="archive" name="ResizePlayers-2.1-1.21.jar">
       <element id="module-output" name="ResizePlayers" />
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
     </root>
