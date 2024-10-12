@@ -1,5 +1,6 @@
 package nl.onys.resizeplayers.utils;
 
+import nl.onys.resizeplayers.ResizePlayers;
 import nl.onys.resizeplayers.configs.PlayerData;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -41,6 +42,24 @@ public class PlayerDataUtils {
     }
 
     /**
+     * Saves the permitted height range of a player to the player data file.
+     * This overwrites the block-height-limit defined in the config.yml.
+     * @param player The player to save the height range of
+     * @param minHeight The minimum height the player can set themselves to in blocks
+     * @param maxHeight The maximum height the player can set themselves to in blocks
+     */
+    public synchronized static void savePermittedHeightRange(OfflinePlayer player, double minHeight, double maxHeight) {
+        ConfigurationSection playerDataSection = PlayerData.get().getConfigurationSection(player.getUniqueId().toString());
+        if (playerDataSection == null) {
+            playerDataSection = PlayerData.get().createSection(player.getUniqueId().toString());
+        }
+        playerDataSection.set("username", player.getName());
+        playerDataSection.set("min-height", minHeight);
+        playerDataSection.set("max-height", maxHeight);
+        PlayerData.save();
+    }
+
+    /**
      * Gets the UUID of a player from their username
      * @param playerName The username of the player
      * @return The UUID of the player. Null if the player is not found
@@ -52,6 +71,25 @@ public class PlayerDataUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * Reloads the scale and reach of all online players from the player data file
+     */
+    public static void reloadAllOnlinePlayersScaleAndReach() {
+        for (Player player : ResizePlayers.getPlugin().getServer().getOnlinePlayers()) {
+            reloadPlayerScaleAndReach(player);
+        }
+    }
+
+    /**
+     * Reloads the scale and reach of a player from the player data file
+     * @param player The player to reload the scale and reach of
+     */
+    public static void reloadPlayerScaleAndReach(Player player) {
+        ScaleUtils.setPlayerScale(player, ScaleUtils.convertBlocksToScale(getPlayerHeight((OfflinePlayer) player)), false, false);
+        ReachUtils.setPlayerBlockReach(player, getPlayerBlockReach((OfflinePlayer) player));
+        ReachUtils.setPlayerEntityReach(player, getPlayerEntityReach((OfflinePlayer) player));
     }
 
     /**

@@ -54,7 +54,7 @@ public class ResizeCommand implements CommandExecutor, TabCompleter {
         double blocksSize = sizes[0];
         double scaleSize = sizes[1];
 
-        ScaleUtils.setPlayerScale(player, scaleSize);
+        ScaleUtils.setPlayerScale(player, scaleSize, true, true);
         MessageUtils.onScaledSelf(player, blocksSize);
         return true;
     }
@@ -87,7 +87,7 @@ public class ResizeCommand implements CommandExecutor, TabCompleter {
         double blocksSize = sizes[0];
         double scaleSize = sizes[1];
 
-        ScaleUtils.setPlayerScale(targetPlayer, scaleSize);
+        ScaleUtils.setPlayerScale(targetPlayer, scaleSize, true, true);
         MessageUtils.onScaledOther(player, blocksSize, targetPlayer.getName());
         return true;
     }
@@ -115,7 +115,7 @@ public class ResizeCommand implements CommandExecutor, TabCompleter {
                 MessageUtils.onTargetExempt(player, onlinePlayer.getName());
                 continue;
             }
-            ScaleUtils.setPlayerScale(onlinePlayer, scaleSize);
+            ScaleUtils.setPlayerScale(onlinePlayer, scaleSize, true, true);
         }
         MessageUtils.onScaledAll(player, blocksSize);
         return true;

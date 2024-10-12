@@ -1,6 +1,7 @@
 package nl.onys.resizeplayers.utils;
 
 import nl.onys.resizeplayers.ResizePlayers;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.FileConfiguration;

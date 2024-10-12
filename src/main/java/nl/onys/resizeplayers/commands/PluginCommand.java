@@ -33,6 +33,7 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
             if (commandSender.hasPermission("resizeplayers.reload") || commandSender.isOp()) {
                 ResizePlayers.getPlugin().reloadConfig();
                 PlayerData.reload();
+                PlayerDataUtils.reloadAllOnlinePlayersScaleAndReach();
                 MessageUtils.onConfigReloaded(commandSender);
             } else {
                 MessageUtils.onNoPermission(commandSender, "resizeplayers.reload");

@@ -4,6 +4,7 @@ import nl.onys.resizeplayers.commands.PluginCommand;
 import nl.onys.resizeplayers.commands.ResizeCommand;
 import nl.onys.resizeplayers.configs.PlayerData;
 import nl.onys.resizeplayers.integrations.placeholderapi.ResizePlayersPlaceholders;
+import nl.onys.resizeplayers.listeners.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
@@ -34,6 +35,8 @@ public final class ResizePlayers extends JavaPlugin {
 
         setCommandExecutor("resize", new ResizeCommand());
         setCommandExecutor("resizeplayers", new PluginCommand());
+
+        registerEvent(new PlayerJoinListener());
     }
 
     private void setCommandExecutor(String command, CommandExecutor executor) {

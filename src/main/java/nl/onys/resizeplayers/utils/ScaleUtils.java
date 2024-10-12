@@ -25,12 +25,12 @@ public class ScaleUtils {
      * @param player The player to set the scale of
      * @param newScale The new scale to set
      */
-    public static void setPlayerScale(Player player, double newScale) {
+    public static void setPlayerScale(Player player, double newScale, boolean updateReach, boolean updateConfig) {
         AttributeInstance scale = player.getAttribute(Attribute.GENERIC_SCALE);
         if (scale == null) return;
         scale.setBaseValue(newScale);
-        PlayerDataUtils.savePlayerHeight(player, convertScaleToBlocks(newScale));
-        ReachUtils.setPlayerReach(player, newScale);
+        if (updateConfig) PlayerDataUtils.savePlayerHeight(player, convertScaleToBlocks(newScale));
+        if (updateReach) ReachUtils.setPlayerReach(player, newScale);
     }
 
     /**
